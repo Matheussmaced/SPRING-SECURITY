@@ -2,6 +2,7 @@ package dio.dio_spring_security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +20,11 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-        .authorizeRequests(authorizeRequests -> authorizeRequests
+        .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+            .requestMatchers("/").permitAll()
+            .requestMatchers(HttpMethod.POST, "/login").permitAll() // ROTA PRINCIPAL QUALQUER PESSOA PODE TER ACESSO
+            .requestMatchers("/managers").hasRole("MANAGERS")
+            .requestMatchers("/users").hasAnyRole("USERS", "MANAGERS")
             .anyRequest().authenticated())
         .formLogin(formLogin -> formLogin
             .permitAll())
