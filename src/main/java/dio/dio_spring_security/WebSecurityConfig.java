@@ -33,20 +33,22 @@ public class WebSecurityConfig {
     return http.build();
   }
 
-  @Bean
-  public UserDetailsService userDetailsService() {
-    UserDetails user = User.withDefaultPasswordEncoder()
-        .username("user")
-        .password("user123")
-        .roles("USERS")
-        .build();
-
-    UserDetails admin = User.withDefaultPasswordEncoder()
-        .username("admin")
-        .password("master123")
-        .roles("MANAGERS")
-        .build();
-
-    return new InMemoryUserDetailsManager(user, admin);
-  }
+  /*
+   * @Bean
+   * public UserDetailsService userDetailsService() {
+   * UserDetails user = User.withDefaultPasswordEncoder()
+   * .username("user")
+   * .password("user123")
+   * .roles("USERS")
+   * .build();
+   * 
+   * UserDetails admin = User.withDefaultPasswordEncoder()
+   * .username("admin")
+   * .password("master123")
+   * .roles("MANAGERS")
+   * .build();
+   * 
+   * return new InMemoryUserDetailsManager(user, admin);
+   * }
+   */ // meus dados não estarão mais em memoria
 }
